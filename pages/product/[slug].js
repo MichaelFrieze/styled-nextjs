@@ -9,10 +9,11 @@ import { GET_PRODUCT_QUERY } from '../../lib/query';
 import { useQuery } from 'urql';
 import { useRouter } from 'next/router';
 import { useStateContext } from '../../lib/context';
+import { useEffect } from 'react';
 
 export default function ProductDetails() {
   //Use state
-  const { increaseQty, decreaseQty, qty, onAdd } = useStateContext();
+  const { increaseQty, decreaseQty, resetQty, qty, onAdd } = useStateContext();
   //Fetch slug
   const { query } = useRouter();
   //Fetch Graphql data
@@ -21,6 +22,12 @@ export default function ProductDetails() {
     variables: { slug: query.slug },
   });
   const { data, fetching, error } = results;
+
+  // reset quantity
+  useEffect(() => {
+    resetQty();
+  }, [query.slug]);
+
   if (fetching) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
   //Extract Data

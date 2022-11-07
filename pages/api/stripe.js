@@ -1,6 +1,13 @@
 import Stripe from 'stripe';
 const stripe = new Stripe(`${process.env.STRIPE_SECRET_KEY}`);
 
+/* 
+Credit Card Test Details:
+4242 4242 4242 4242
+04 / 24
+424
+ */
+
 export default async function handler(req, res) {
   if (req.method === 'POST') {
     try {

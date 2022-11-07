@@ -1,18 +1,16 @@
-import styled from "styled-components";
-import shiba from "../public/shiba-success.png";
-import Image from "next/image";
-import { useRouter } from "next/router";
-const { motion } = require("framer-motion");
+import styled from 'styled-components';
+import shiba from '../public/shiba-success.png';
+import Image from 'next/image';
+import { useRouter } from 'next/router';
+const { motion } = require('framer-motion');
 // STRIPE_SECRET_KEY
-const stripe = require("stripe")(
-  `${process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY}`
-);
+const stripe = require('stripe')(`${process.env.STRIPE_SECRET_KEY}`);
 
 export async function getServerSideProps(params) {
   const order = await stripe.checkout.sessions.retrieve(
     params.query.session_id,
     {
-      expand: ["line_items"],
+      expand: ['line_items'],
     }
   );
 
@@ -52,7 +50,7 @@ export default function Success({ order }) {
             ))}
           </OrderInfo>
         </InfoWrapper>
-        <button onClick={() => route.push("/")}>Continue Shopping</button>
+        <button onClick={() => route.push('/')}>Continue Shopping</button>
         <Image src={shiba} alt="success" />
       </Card>
     </Wrapper>

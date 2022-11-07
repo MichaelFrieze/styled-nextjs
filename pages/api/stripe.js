@@ -19,6 +19,11 @@ export default async function handler(req, res) {
         shipping_address_collection: {
           allowed_countries: ['US', 'CA'],
         },
+        allow_promotion_codes: true,
+        shipping_options: [
+          { shipping_rate: 'shr_1M1LUOL9jrX4SsiB4EOzdDEv' },
+          { shipping_rate: 'shr_1M1LZFL9jrX4SsiB4W0rGk9d' },
+        ],
 
         line_items: req.body.map((item) => {
           return {

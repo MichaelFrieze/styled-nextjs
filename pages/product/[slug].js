@@ -9,11 +9,11 @@ import { GET_PRODUCT_QUERY } from '../../lib/query';
 import { useQuery } from 'urql';
 import { useRouter } from 'next/router';
 import { useStateContext } from '../../lib/context';
-import { useEffect } from 'react';
+import toast from 'react-hot-toast';
 
 export default function ProductDetails() {
   //Use state
-  const { increaseQty, decreaseQty, resetQty, qty, onAdd } = useStateContext();
+  const { increaseQty, decreaseQty, qty, onAdd } = useStateContext();
   //Fetch slug
   const { query } = useRouter();
   //Fetch Graphql data
@@ -22,16 +22,17 @@ export default function ProductDetails() {
     variables: { slug: query.slug },
   });
   const { data, fetching, error } = results;
-
-  // reset quantity
-  useEffect(() => {
-    resetQty();
-  }, [query.slug]);
-
   if (fetching) return <p>Loading...</p>;
   if (error) return <p>Oh no... {error.message}</p>;
   //Extract Data
   const { title, description, image } = data.products.data[0].attributes;
+
+  //Create Toast
+  const notify = () => {
+    toast.success(`${title} added to your cart.`, {
+      duration: 1500,
+    });
+  };
 
   return (
     <DetailsStyle>
@@ -49,7 +50,12 @@ export default function ProductDetails() {
             <AiFillPlusCircle onClick={increaseQty} />
           </button>
         </Quantity>
-        <Buy onClick={() => onAdd(data.products.data[0].attributes, qty)}>
+        <Buy
+          onClick={() => {
+            onAdd(data.products.data[0].attributes, qty);
+            notify();
+          }}
+        >
           Add To Cart
         </Buy>
       </ProductInfo>

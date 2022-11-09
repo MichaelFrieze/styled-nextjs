@@ -1,7 +1,7 @@
-import { FaUserCircle } from "react-icons/fa";
-import { useRouter } from "next/router";
-import { useUser } from "@auth0/nextjs-auth0";
-import styled from "styled-components";
+import { FaUserCircle } from 'react-icons/fa';
+import { useRouter } from 'next/router';
+import { useUser } from '@auth0/nextjs-auth0';
+import styled from 'styled-components';
 
 export default function User() {
   const route = useRouter();
@@ -10,7 +10,7 @@ export default function User() {
     return (
       <div onClick={() => route.push(`/api/auth/login`)}>
         <FaUserCircle className="profile" />
-        <h3>Profile</h3>
+        <h3>Login</h3>
       </div>
     );
   return (
